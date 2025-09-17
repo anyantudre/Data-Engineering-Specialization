@@ -1,5 +1,4 @@
-## Concepts to share
-
+## High level look at the field of data engineering
 
 ### Context:
 In the last decade, pretty much every industry has become digital. Digital communications are pervasive, and digital data is replacing pieces of paper as the primary mechanism for information is stored in healthcare, finance, manufacturing, education, tech, and pretty much all industries. But with this tidal wave of data comes risk and also new challenges for how to store and process all those data to create value. Whether your organization is looking to improve how it serves customers or outmaneuver the competition, having good data pipelines is increasingly critical, which is why there's also skyrocketing demand for data engineers. 
@@ -42,6 +41,31 @@ In simpler terms, your job as a data engineer is to get raw data from somewhere,
 
 ### Data engineering lifecycle:
 You can think of the data engineering life cycle as comprising a series of stages. On the left here, you have data generation and source systems. These source systems might be any kind of software application or user generated data or sensor measurements, or something else. One way or another, the life cycle starts with data generation. Then in the middle here, you have ingestion, transformation, storage, and serving. I've drawn a box around these stages to indicate that these are the stages of the life cycle that will be your focus as a data engineer. Notice here that storage sits underneath ingestion, transformation, and serving and spans the entire width of the box. This is to indicate that data storage is an integral part of each of the stages above. In practice, the data systems you build may not look quite as simple as a life cycle diagram might appear. But in my experience, it's helpful to think of the life cycle in this way when it comes to visualizing the common elements of any data system. On the right side of the diagram, you have the end use cases. These are the ways in which stakeholders in your organization will actually derive value from the data. These include things like analytics, machine learning, or something called Reverse ETL, which is basically sending the transformed or processed data back to the source systems to provide additional value for individuals in an organization who use these systems. 
+
+
+### A Brief History of Data Engineering
+Data has always existed, but data engineering refers mainly to **digitally recorded data**.
+
+* **1960s–70s**: Birth of computerized databases, relational databases, and SQL (developed at IBM).
+* **1980s**: Bill Inmon creates the first **data warehouse** for analytical decision-making.
+* **1990s**: Growth of business intelligence; Inmon and Ralph Kimball propose different **data modeling approaches**. The **Internet boom** spurs servers, databases, and storage systems.
+* **2000s**: Survivors of the dotcom bust (Google, Amazon, Yahoo) face **explosive data growth**, marking the **big data era** (defined by volume, velocity, variety).
+  * **2004**: Google publishes the **MapReduce paper**, inspiring Yahoo to create **Apache Hadoop** (2006), catalyzing large-scale data processing.
+  * **Amazon** builds scalable infrastructure: **EC2 (compute)**, **S3 (storage)**, **DynamoDB (NoSQL)**, launching **AWS**, the first major **public cloud**. This “pay-as-you-go” cloud model revolutionizes software and data systems.
+* **Late 2000s–2010s**:
+
+  * Democratization: startups gain access to cutting-edge data tools.
+  * Transition from **batch computing** to **event streaming** enables **real-time data**.
+  * Challenges: managing big data stacks (Hadoop, etc.) required costly, complex operations.
+  * Eventually, “big data engineers” simply became **data engineers**, as scalable processing became mainstream.
+  * Rise of **Cloud-first**, **open source**, and **third-party products** simplified large-scale data work.
+* **Today**:
+
+  * Data engineering emphasizes **integration and orchestration** of diverse technologies (“Lego bricks”) to meet **business goals**.
+  * The role has moved **up the value chain**: data engineers now directly support **business strategy**, leveraging mature tools and contributing to future innovations.
+  * Every company seeks to derive value from data, regardless of size.
+
+In short, data engineering has evolved from maintaining complex big data systems to **strategically building robust, scalable, business-driven data platforms**, central to modern organizations.
 
 
 
@@ -130,3 +154,66 @@ As a last step in this final stage,
 -  you'll build and deploy your data system. Once it's up and running, you'll continuously monitor and evaluate your system's performance and iterate on it to keep improving it where you can. Any data system you build will need to evolve over time. This can be due to changing stakeholder needs or in some cases, the emergence of a new tool or technology that can improve your system's performance, reduce your costs, or provide some other advantage. 
 
 And so while I presented this framework as a sequence of four stages that happened one after another, in reality, this will be an ongoing and sort of cyclical process. As business goals and stakeholder needs evolve, your data systems will need to evolve with them. So you can think of this as something where, as a data engineer you're always communicating with stakeholders about their needs and expectations, evaluating those needs in terms of requirements for your data systems, and updating your systems as needed to meet the needs of your stakeholders.
+
+
+
+### Data Engineering on the Cloud
+
+some of the core AWS services breaken up into five categories, compute, network, storage, databases, and security.
+
+#### compute
+- Amazon elastic compute cloud or EC2: the service that provides virtual machines or VMs on AWS. 
+a VM as a virtual computer or server where you can run whatever operating system you want, like Linux, macOS or Windows, as well as any applications, just like you would on any computer.
+
+But in this case, on the AWS cloud when you launch a single VM using EC2, we call that an Amazon EC2 instance:
+    - complete control over that instance, including the operating system, applications and anything else that happens on the instance itself. 
+    - very flexible option for your workloads that offers you a lot of control:
+        - as a development machine for programming
+        - run a web server or containers or 
+        - machine learning workloads or whatever you want. 
+    - You can deploy a single EC2 instance or a fleet of them and scale horizontally to match demand. So that's a very quick rundown on EC2. 
+
+Different options for compute on AWS:
+- serverless functions using a service called AWS lambda, which is where you can host code that runs in response to triggers or events
+- container hosting services like Amazon Elastic Container Service or Amazon Elastic Kubernetes Service.
+
+Réf: https://www.coursera.org/learn/intro-to-data-engineering/supplement/fyNJD/compute-amazon-elastic-compute-cloud-ec2
+
+
+#### networking
+
+Whenever you create an EC2 instance or many other types of AWS resources, you need to place it into a network of some kind. 
+
+Amazon Virtual Private Cloud or VPC for short are private networks in the cloud that you can create and control that are isolated from other networks in the AWS cloud in which you can create and place resources. 
+You choose the size of the private IP space you want and you can partition it into smaller networks called sub networks or subnets for short. A single VPC spans all availability zones within a region, but you cannot span across regions. So youd need to create a VPC in every region you want to operate in. 
+The same is true for most AWS resources, they are region bound. So whenever you create certain AWS resources, like EC2 instances or instance based databases, you need to select which VPC you want and which AZ you want to place it in. 
+
+Réf: https://www.coursera.org/learn/intro-to-data-engineering/supplement/MMwyn/networking-virtual-private-cloud-vpc-subnets
+
+
+#### storage
+
+- object storage: most often used for storing unstructured data like documents, logs, photos, or videos. But really, you can put any kind of data into object storage
+Amazon S3 object storage service
+
+- block storage: which is typically used for database storage, virtual machine file systems, and other environments where low latency and high performance are critical. 
+Within AWS, you can attach block storage devices called Amazon elastic block store volumes to EC2 instances which mount to the os, and you can then store and access data using programs running on EC2.
+
+- file storage: which is the most familiar type of storage for your average non technical user. With file storage, data is organized into files and directories in a hierarchical structure, just like your file system on your laptop or a shared file system at work. 
+AWS has a managed service called Amazon Elastic file system, which provides a scalable file storage solution that can be mounted to multiple different systems at once for file access.
+
+
+- In some sense, you could say databases are just another kind of storage service, but databases fall into a separate core category. Though databases use block storage behind the scenes to store data, they also provide special functionality for managing structured data, like enabling complex querying, data indexing, and other features which are not typically offered by general storage services. 
+As a data engineer, you will frequently work with tabular data organized in relational database format. 
+- Amazon relational Database service, or RDS, which, as the name implies, is a cloud based relational database service. 
+- Amazon Redshift, which is a data warehouse service that allows you to store transform and serve data for end use cases.
+
+
+
+#### security 
+AWS follows what we call the shared responsibility model. The shared responsibility model states that AWS is responsible for security of the cloud and you are responsible for security in the cloud. 
+
+
+Réf: https://www.coursera.org/learn/intro-to-data-engineering/supplement/uqYtR/security-aws-shared-responsibility-model
+
+Week 1 Resources: https://www.coursera.org/learn/intro-to-data-engineering/supplement/WFANk/week-1-resources
