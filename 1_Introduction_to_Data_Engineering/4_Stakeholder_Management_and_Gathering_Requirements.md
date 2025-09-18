@@ -61,7 +61,6 @@ This emphasizes the importance of bridging the **software–data divide** by ali
 
 ## Conversation with Marketing
 Marketing stakeholders require **real-time insights** and **personalized recommendations**:
-
 * Current dashboards show sales trends but with a two-day delay. Marketing needs near-real-time updates (e.g., hourly) to act on demand spikes with targeted promotions.
 * Current recommender system is simplistic (“popular products of the week”). They need **personalized recommendations** that consider browsing history, purchase behavior, and cart contents.
 
